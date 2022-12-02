@@ -53,7 +53,7 @@ module app_worker 'aca.bicep' = {
             }
             {
                 name: 'event-hub-connection-string'
-                value: eventHub.outputs.eventHubNamespaceConnectionStringWithEntityPath
+                value: eventHub.outputs.eventHubNamespaceConnectionString
             }
         ]
         envVars: [

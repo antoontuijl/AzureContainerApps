@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackgroundWorker", "BackgroundWorker\BackgroundWorker.csproj", "{7F67F25C-99C4-40CD-9513-C54C857DCE19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHubBackgroundWorker", "EventHubBackgroundWorker\EventHubBackgroundWorker.csproj", "{3A47BF82-24E0-4142-B3F9-8515F30AF093}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceBusBackgroundWorker", "ServiceBusBackgroundWorker\ServiceBusBackgroundWorker.csproj", "{24A5C384-AF9F-4E28-BA24-4D2F511FF6DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7F67F25C-99C4-40CD-9513-C54C857DCE19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F67F25C-99C4-40CD-9513-C54C857DCE19}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F67F25C-99C4-40CD-9513-C54C857DCE19}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F67F25C-99C4-40CD-9513-C54C857DCE19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A47BF82-24E0-4142-B3F9-8515F30AF093}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A47BF82-24E0-4142-B3F9-8515F30AF093}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A47BF82-24E0-4142-B3F9-8515F30AF093}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A47BF82-24E0-4142-B3F9-8515F30AF093}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24A5C384-AF9F-4E28-BA24-4D2F511FF6DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24A5C384-AF9F-4E28-BA24-4D2F511FF6DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24A5C384-AF9F-4E28-BA24-4D2F511FF6DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24A5C384-AF9F-4E28-BA24-4D2F511FF6DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,9 +3,11 @@ param name string = 'background-worker'
 param storageAccountName string = 'saacabackgroundworker'
 param dockerUserName string = 'antoontuijl'
 
-param workerRepository string = 'aca-background-worker'
+param eventHubWorkerRepository string = 'aca-eventhub-background-worker'
+param serviceBusWorkerRepository string = 'aca-servicebus-background-worker'
 param workerTag string = 'latest'
 
+var queueName = 'work'
 var eventHubName = 'interactions'
 var resultsContainerName = 'results'
 var eventHubContainerName = 'events'
@@ -29,6 +31,16 @@ module storageAccount 'storage-account.bicep' = {
     }
 }
 
+module serviceBus 'service-bus.bicep' = {
+    name: 'service-bus'
+    params: {
+        name: 'thns${name}'
+        location: location
+        queueName: queueName
+    }
+}
+
+
 module eventHub 'event-hub.bicep' = {
     name: 'event-hub'
     params: {
@@ -39,13 +51,13 @@ module eventHub 'event-hub.bicep' = {
     }
 }
 
-module app_worker 'aca.bicep' = {
-    name: 'app-worker'
+module eventhub_worker 'aca.bicep' = {
+    name: 'app-eventhub-worker'
     params: {
         location: location
-        name: 'worker'
+        name: 'eventhub-worker'
         containerAppEnvironmentId: containerAppEnvironment.outputs.id
-        containerImage: '${dockerUserName}/${workerRepository}:${workerTag}'
+        containerImage: '${dockerUserName}/${eventHubWorkerRepository}:${workerTag}'
         secrets: [
             {
                 name: 'storage-account-connection-string'
@@ -101,6 +113,64 @@ module app_worker 'aca.bicep' = {
                         triggerParameter: 'storageConnection'
                       }
                     ]
+                }
+            }
+        ]
+    }
+}
+
+module servicebus_worker 'aca.bicep' = {
+    name: 'app-servicebus-worker'
+    params: {
+        location: location
+        name: 'servicebus-worker'
+        containerAppEnvironmentId: containerAppEnvironment.outputs.id
+        containerImage: '${dockerUserName}/${serviceBusWorkerRepository}:${workerTag}'
+        secrets: [
+            {
+                name: 'storage-account-connection-string'
+                value: storageAccount.outputs.StorageAccountConnectionString
+            }
+            {
+                name: 'service-bus-connection-string'
+                value: serviceBus.outputs.ServiceBusConnectionString
+            }
+        ]
+        envVars: [
+            {
+                name: 'QueueConfig__QueueName'
+                value: queueName
+            }
+            {
+                name: 'QueueConfig__ConnectionString'
+                secretRef: 'service-bus-connection-string'
+            }
+            {
+                name: 'BlobConfig__ContainerName'
+                value: resultsContainerName
+            }
+            {
+                name: 'BlobConfig__ConnectionString'
+                secretRef: 'storage-account-connection-string'
+            }
+        ]
+        useExternalIngress: false
+        
+        minReplicas: 0
+        maxReplicas: 10
+        scaleRules: [
+            {
+                name: 'queue-trigger'
+                custom: {
+                    type: 'azure-servicebus'
+                    metadata: {
+                        queueName: queueName
+                        messageCount: '5'
+                    }
+                    auth: [{
+                        secretRef: 'service-bus-connection-string'
+                        triggerParameter: 'connection'
+                    }]
                 }
             }
         ]

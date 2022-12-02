@@ -3,3 +3,7 @@
 ################################################################################
 
 /.vs
+/src/.vs
+/src/BackgroundWorker/bin/Debug/net6.0
+/src/BackgroundWorker/obj
+*.user

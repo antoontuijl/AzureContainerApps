@@ -10,7 +10,6 @@ namespace AzureContainerApp.Worker
     public class Worker : BackgroundService
     {
         private readonly BlobConfig _blobConfig;
-        private readonly EventHubConfig _eventHubConfig;
         private readonly ILogger<Worker> _logger;
         private readonly EventProcessorClient _processor;
 
@@ -18,12 +17,10 @@ namespace AzureContainerApp.Worker
             IOptions<BlobConfig> blobConfig,
             ILogger<Worker> logger)
         {
-            _eventHubConfig = eventHubConfig.Value;
             _blobConfig = blobConfig.Value;
             _logger = logger;
 
             var storageConnectionString = _blobConfig.ConnectionString;
-            var container = _blobConfig.ContainerName;
             var eventHubContainer = _blobConfig.EventHubContainerName;
             var storageClient = new BlobContainerClient(storageConnectionString, eventHubContainer);
 

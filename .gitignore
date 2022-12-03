@@ -7,3 +7,11 @@
 /src/BackgroundWorker/bin/Debug/net6.0
 /src/BackgroundWorker/obj
 *.user
+/src/EventHubBackgroundWorker/appsettings.local.json
+/src/EventHubBackgroundWorker/bin/Debug/net6.0
+/src/EventHubBackgroundWorker/obj/Container
+/src/ServiceBusBackgroundWorker/obj/Container/ContainerDevelopmentMode.cache
+/src/ServiceBusBackgroundWorker/obj/Container/ContainerId.cache
+/src/ServiceBusBackgroundWorker/obj/Container/ContainerName.cache
+/src/ServiceBusBackgroundWorker/obj/Container/ContainerRunContext.cache
+/src/EventHubBackgroundWorker/obj/Debug/net6.0/EventHubBackgroundWorker.csproj.BuildWithSkipAnalyzers

@@ -5,12 +5,9 @@ dockerUserName="antoontuijl"
 set -e
 cd src
 
-cd EventHubBackgroundWorker
-docker build . -t $dockerUserName/aca-eventhub-background-worker:latest
+docker build -t antoontuijl/aca-eventhub-background-worker:latest -f EventHubBackgroundWorker/Dockerfile .
 
-cd ..
-cd ServiceBusBackgroundWorker
-docker build . -t $dockerUserName/aca-servicebus-background-worker:latest
+docker build -t antoontuijl/aca-servicebus-background-worker:latest -f ServiceBusBackgroundWorker/Dockerfile .
 
 cd ..
 cd ..

@@ -15,3 +15,5 @@
 /src/ServiceBusBackgroundWorker/obj/Container/ContainerName.cache
 /src/ServiceBusBackgroundWorker/obj/Container/ContainerRunContext.cache
 /src/EventHubBackgroundWorker/obj/Debug/net6.0/EventHubBackgroundWorker.csproj.BuildWithSkipAnalyzers
+/src/Shared/bin/Debug/net6.0
+/src/Shared/obj

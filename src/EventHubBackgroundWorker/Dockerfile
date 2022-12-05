@@ -5,11 +5,11 @@ FROM mcr.microsoft.com/dotnet/runtime:6.0 AS base
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
-COPY ["EventHubBackgroundWorker.csproj", "./"]
-RUN dotnet restore "EventHubBackgroundWorker.csproj"
+COPY ["EventHubBackgroundWorker/EventHubBackgroundWorker.csproj", "EventHubBackgroundWorker/"]
+COPY ["Shared/Shared.csproj", "Shared/"]
+RUN dotnet restore "EventHubBackgroundWorker/EventHubBackgroundWorker.csproj"
 COPY . .
-WORKDIR "/src/."
+WORKDIR "/EventHubBackgroundWorker"
 RUN dotnet build "EventHubBackgroundWorker.csproj" -c Release -o /app/build
 
 FROM build AS publish

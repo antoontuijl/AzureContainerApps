@@ -5,11 +5,10 @@ FROM mcr.microsoft.com/dotnet/runtime:6.0 AS base
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
-COPY ["ServiceBusBackgroundWorker.csproj", "./"]
-RUN dotnet restore "ServiceBusBackgroundWorker.csproj"
+COPY ["ServiceBusBackgroundWorker/ServiceBusBackgroundWorker.csproj", "ServiceBusBackgroundWorker/"]
+RUN dotnet restore "ServiceBusBackgroundWorker/ServiceBusBackgroundWorker.csproj"
 COPY . .
-WORKDIR "/src/."
+WORKDIR "/ServiceBusBackgroundWorker"
 RUN dotnet build "ServiceBusBackgroundWorker.csproj" -c Release -o /app/build
 
 FROM build AS publish

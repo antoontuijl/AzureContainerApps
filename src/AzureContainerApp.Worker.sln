@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHubBackgroundWorker", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceBusBackgroundWorker", "ServiceBusBackgroundWorker\ServiceBusBackgroundWorker.csproj", "{24A5C384-AF9F-4E28-BA24-4D2F511FF6DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{AD0DE160-59B8-4B0A-BEA7-2F8A0A433136}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{24A5C384-AF9F-4E28-BA24-4D2F511FF6DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24A5C384-AF9F-4E28-BA24-4D2F511FF6DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24A5C384-AF9F-4E28-BA24-4D2F511FF6DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD0DE160-59B8-4B0A-BEA7-2F8A0A433136}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD0DE160-59B8-4B0A-BEA7-2F8A0A433136}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD0DE160-59B8-4B0A-BEA7-2F8A0A433136}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD0DE160-59B8-4B0A-BEA7-2F8A0A433136}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

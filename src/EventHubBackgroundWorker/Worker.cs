@@ -4,6 +4,7 @@ using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using AzureContainerApp.EventHubBackgroundWorker.Configuration;
 using Microsoft.Extensions.Options;
+using Shared;
 
 namespace AzureContainerApp.EventHubBackgroundWorker
 {
@@ -53,7 +54,12 @@ namespace AzureContainerApp.EventHubBackgroundWorker
         {
             _logger.LogInformation("Event received at: {time}.", DateTimeOffset.Now);
 
-            var fileName = $"eventhub_{Guid.NewGuid()}";
+            var eventId = Guid.NewGuid();
+            var fileName = $"eventhub_{eventId}";
+            var @event = new Event { EventId = eventId };
+
+            _logger.LogInformation($"Event {@event.EventId}");
+
             var blobContainerClient = new BlobContainerClient(_blobConfig.ConnectionString, _blobConfig.ContainerName);
             _logger.LogInformation("Uploading message to blob: {BlobFileName} to container: {ContainerName}", fileName,
                 _blobConfig.ContainerName);

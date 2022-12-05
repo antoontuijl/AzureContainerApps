@@ -3,7 +3,7 @@
     "EventHubBackgroundWorker": {
       "commandName": "Project",
       "environmentVariables": {
-        "DOTNET_ENVIRONMENT": "dev"
+        "DOTNET_ENVIRONMENT": "local"
       },
       "dotnetRunMessages": true
     },

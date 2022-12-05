@@ -53,7 +53,7 @@ namespace AzureContainerApp.EventHubBackgroundWorker
         {
             _logger.LogInformation("Event received at: {time}.", DateTimeOffset.Now);
 
-            var fileName = eventArgs.Data.MessageId;
+            var fileName = $"eventhub_{Guid.NewGuid()}";
             var blobContainerClient = new BlobContainerClient(_blobConfig.ConnectionString, _blobConfig.ContainerName);
             _logger.LogInformation("Uploading message to blob: {BlobFileName} to container: {ContainerName}", fileName,
                 _blobConfig.ContainerName);

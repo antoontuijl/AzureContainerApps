@@ -27,20 +27,16 @@ resource eventHub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
   }
 }
 
-resource eventHub_ListenSend 'Microsoft.EventHub/namespaces/eventhubs/authorizationRules@2021-01-01-preview' = {
-    parent: eventHub
-    name: 'ListenSend'
-    properties: {
-      rights: [
-        'Listen'
-        'Send'
-      ]
-    }
-    dependsOn: [
-      eventHubNamespace
+resource eventHubNamespace_ListenSend 'Microsoft.EventHub/namespaces/authorizationRules@2021-11-01' = {
+  name: 'ListenSend'
+  parent: eventHubNamespace
+  properties: {
+    rights: [
+      'Listen'
+      'Send'
     ]
   }
-
+}
 
 /*resource consumerGroup 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2021-11-01' = {
   parent: eventHub
@@ -52,8 +48,7 @@ resource eventHub_ListenSend 'Microsoft.EventHub/namespaces/eventhubs/authorizat
   ]
 }*/
 
-var eventHubNamespaceConnectionString = listKeys(eventHub_ListenSend.id, eventHub_ListenSend.apiVersion).primaryConnectionString
+var eventHubNamespaceConnectionString = listKeys(eventHubNamespace_ListenSend.id, eventHubNamespace_ListenSend.apiVersion).primaryConnectionString
 
 output eventHubNamespaceConnectionString string = eventHubNamespaceConnectionString
-output eventHubNamespaceConnectionStringWithEntityPath string = '${eventHubNamespaceConnectionString};EntityPath=${eventHubName}'
 output eventHubName string = eventHubName

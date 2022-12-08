@@ -41,14 +41,23 @@ module serviceBus 'service-bus.bicep' = {
 }
 
 
-module eventHub 'event-hub.bicep' = {
-    name: 'event-hub'
+module eventHubNamespace 'event-hub-namespace.bicep' = {
+    name: 'event-hub-namespace'
     params: {
         location: location
         eventHubNamespaceName: 'backgroundworker-eh'
-        eventHubName: eventHubName
-        eventHubConsumerGroup: eventHubConsumerGroup
     }
+}
+
+module eventHub 'event-hub.bicep' = {
+    name: 'event-hub'
+    params: {
+        eventHubNamespaceName: 'backgroundworker-eh'
+        eventHubName: eventHubName
+    }
+    dependsOn: [
+        eventHubNamespace
+    ]
 }
 
 module eventhub_worker 'aca.bicep' = {
@@ -65,7 +74,7 @@ module eventhub_worker 'aca.bicep' = {
             }
             {
                 name: 'event-hub-connection-string'
-                value: eventHub.outputs.eventHubNamespaceConnectionString
+                value: eventHub.outputs.eventHubConnectionString
             }
         ]
         envVars: [

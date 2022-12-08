@@ -1,23 +1,22 @@
-param location string = resourceGroup().location
+@description('Event Hub namespace where the event hub will be created')
 param eventHubNamespaceName string 
-param eventHubNamespaceSku string = 'Basic'
-param eventHubName string
-param eventHubPartitionCount int = 1
-param eventHubMessageRetentionInDays int = 1
-param eventHubConsumerGroup string = '$Default'
 
-resource eventHubNamespace 'Microsoft.EventHub/namespaces@2021-11-01' = {
+@description('Event Hub name')
+param eventHubName string
+
+@description('The number of partitions in the event hub')
+param eventHubPartitionCount int = 1
+
+@description('Message rentention days (1 for Basic tier)')
+param eventHubMessageRetentionInDays int = 1
+
+@description('Authorization Rule name for Send and Listen')
+param authorizationRuleName string = 'ListenSend'
+
+resource eventHubNamespace 'Microsoft.EventHub/namespaces@2021-11-01' existing = {
   name: eventHubNamespaceName
-  location: location
-  sku: {
-    name: eventHubNamespaceSku
-    tier: eventHubNamespaceSku
-    capacity: 1
-  }
-  properties: {
-    zoneRedundant: true
-  }
 }
+
 resource eventHub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
   parent: eventHubNamespace
   name: eventHubName
@@ -27,9 +26,9 @@ resource eventHub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
   }
 }
 
-resource eventHubNamespace_ListenSend 'Microsoft.EventHub/namespaces/authorizationRules@2021-11-01' = {
-  name: 'ListenSend'
-  parent: eventHubNamespace
+resource eventHub_ListenSend 'Microsoft.EventHub/namespaces/eventHubs/authorizationRules@2021-11-01' = {
+  name: authorizationRuleName
+  parent: eventHub
   properties: {
     rights: [
       'Listen'
@@ -38,17 +37,7 @@ resource eventHubNamespace_ListenSend 'Microsoft.EventHub/namespaces/authorizati
   }
 }
 
-/*resource consumerGroup 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2021-11-01' = {
-  parent: eventHub
-  name: eventHubConsumerGroup
-  properties: {
-  }
-  dependsOn: [
-    eventHub
-  ]
-}*/
+var eventHubConnectionString = listKeys(eventHub_ListenSend.id, eventHub_ListenSend.apiVersion).primaryConnectionString
 
-var eventHubNamespaceConnectionString = listKeys(eventHubNamespace_ListenSend.id, eventHubNamespace_ListenSend.apiVersion).primaryConnectionString
-
-output eventHubNamespaceConnectionString string = eventHubNamespaceConnectionString
+output eventHubConnectionString string = eventHubConnectionString
 output eventHubName string = eventHubName
